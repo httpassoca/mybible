@@ -6,8 +6,8 @@ import router from './router'
 import './assets/main.sass'
 
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { CoMenu, FaUserCircle } from "oh-vue-icons/icons";
-addIcons(CoMenu, FaUserCircle);
+import { CoMenu, FaUserCircle, OiChevronDown, OiChevronUp } from "oh-vue-icons/icons";
+addIcons(CoMenu, FaUserCircle, OiChevronDown, OiChevronUp);
 
 
 const app = createApp(App)

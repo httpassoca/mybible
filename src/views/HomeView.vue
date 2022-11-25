@@ -1,8 +1,18 @@
 <template>
   <div class="home">
-    <select v-if="books.length" v-model="selectedBook" @change="getBook()">
-      <option v-for="bok in books" :value="bok.abbrev.pt">{{ bok.name }}</option>
-    </select>
+    <div class="search-book">
+      <div class="dropdown" :class="{ active: state.activeDropdown }" v-if="state.books.length">
+        <div class="header">
+          <span>Livro: {{ state.book.book.name }}</span>
+          <v-icon scale="2" :name="state.activeDropdown ? 'oi-chevron-up' : 'oi-chevron-down'"
+            @click="state.activeDropdown = !state.activeDropdown"> </v-icon>
+        </div>
+        <div class="options">
+          <button v-for="bok in state.books" :value="bok.abbrev.pt" @click="getBook(bok.abbrev.pt)">{{ bok.name
+          }}</button>
+        </div>
+      </div>
+    </div>
     <div v-if="state.book" class="bible">
       <h2>
         {{ state.book.book.name }}
@@ -27,24 +37,49 @@ interface IBook {
   testament: string;
 }
 
-let books = ref<IBook[]>([])
-let selectedBook = ref<string>('');
+
 const state = reactive({
+  activeDropdown: true,
   book: null as any,
+  books: [] as IBook[],
 })
 
 onMounted(async () => {
-  books.value = await bible.getBooks();
+  state.books = await bible.getBooks();
+  state.book = await bible.getChapter('gn');
 });
 
-async function getBook() {
-  state.book = await bible.getChapter(selectedBook.value);
+async function getBook(book: string) {
+  state.book = await bible.getChapter(book);
 }
 </script>
 
 <style lang="sass">
-select
-  color: black
+.dropdown
+  .header
+    display: flex
+    justify-content: space-between
+    span
+      font-size: 1.5rem
+    
+  .options
+    height: 0
+    overflow: auto
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    button
+      padding: 6px 10px
+      border: none
+      transition: all .3s
+      text-align: left
+      width: 100%
+      &:hover
+        background-color: rgba(255,255,255,.4)
+
+  &.active .options
+    height: 150px
+
 .bible
   @apply mt-4
   > h2
