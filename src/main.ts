@@ -11,9 +11,19 @@ import {
   FaBible,
   FaUserCircle,
   OiChevronDown,
+  OiChevronLeft,
+  OiChevronRight,
   OiChevronUp,
 } from "oh-vue-icons/icons";
-addIcons(CoMenu, FaUserCircle, OiChevronDown, OiChevronUp, FaBible);
+addIcons(
+  CoMenu,
+  FaBible,
+  FaUserCircle,
+  OiChevronDown,
+  OiChevronLeft,
+  OiChevronRight,
+  OiChevronUp
+);
 
 const app = createApp(App);
 
