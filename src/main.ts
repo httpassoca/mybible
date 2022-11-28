@@ -1,19 +1,24 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import { createApp } from "vue";
+import { createPinia } from "pinia";
 
-import App from './App.vue'
-import router from './router'
-import './assets/main.sass'
+import App from "./App.vue";
+import router from "./router";
+import "./assets/main.sass";
 
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { CoMenu, FaUserCircle, OiChevronDown, OiChevronUp } from "oh-vue-icons/icons";
-addIcons(CoMenu, FaUserCircle, OiChevronDown, OiChevronUp);
+import {
+  CoMenu,
+  FaBible,
+  FaUserCircle,
+  OiChevronDown,
+  OiChevronUp,
+} from "oh-vue-icons/icons";
+addIcons(CoMenu, FaUserCircle, OiChevronDown, OiChevronUp, FaBible);
 
+const app = createApp(App);
 
-const app = createApp(App)
+app.component("VIcon", OhVueIcon);
+app.use(createPinia());
+app.use(router);
 
-app.component("v-icon", OhVueIcon);
-app.use(createPinia())
-app.use(router)
-
-app.mount('#app')
+app.mount("#app");
