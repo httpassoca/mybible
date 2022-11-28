@@ -10,7 +10,7 @@ const bibleStore = useBibleStore();
 </script>
 
 <template>
-  <div class="flex flex-col">
+  <div class="bible-info">
     <div
       v-if="bibleStore.books.length"
       class="dropdown"
@@ -44,8 +44,8 @@ const bibleStore = useBibleStore();
 </template>
 
 <style lang="sass">
-h3
-  font-size: 1.5rem
+.bible-info h3
+  font-size: 1.25rem
 
 .dropdown
   .header

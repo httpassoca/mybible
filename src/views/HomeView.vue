@@ -8,9 +8,9 @@
     <div class="mt-12">
       <div v-if="!bibleStore.isLoading" class="bible">
         <div v-if="bibleStore.verses">
-          <h2>
+          <h1>
             {{ bibleStore.verses.book.name }}
-          </h2>
+          </h1>
           <p v-for="verse in bibleStore.verses.verses" :key="verse.number">
             <b>{{ verse.number }}</b> {{ verse.text }}
           </p>
@@ -34,7 +34,7 @@ const bibleStore = useBibleStore();
 .bible
   display: flex
   flex-direction: column
-  h2
+  h1
     font-size: 2rem
     text-align: center
 .home

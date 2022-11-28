@@ -34,6 +34,7 @@
   margin: 0
   position: relative
   font-weight: normal
+  scroll-behavior: smooth
 
 body
   min-height: 100vh
@@ -46,3 +47,15 @@ body
   text-rendering: optimizeLegibility
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
+
+  
+*::-webkit-scrollbar
+  width: 6px
+  height: 6px
+
+*::-webkit-scrollbar-track
+  background: transparent
+
+*::-webkit-scrollbar-thumb
+  background-color: #66ef73
+  border-radius: 20px
