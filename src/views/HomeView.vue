@@ -1,84 +1,58 @@
 <template>
-  <div class="home">
-    <div class="search-book">
-      <div class="dropdown" :class="{ active: state.activeDropdown }" v-if="state.books.length">
-        <div class="header">
-          <span>Livro: {{ state.book.book.name }}</span>
-          <v-icon scale="2" :name="state.activeDropdown ? 'oi-chevron-up' : 'oi-chevron-down'"
-            @click="state.activeDropdown = !state.activeDropdown"> </v-icon>
-        </div>
-        <div class="options">
-          <button v-for="bok in state.books" :value="bok.abbrev.pt" @click="getBook(bok.abbrev.pt)">{{ bok.name
-          }}</button>
+  <div class="home flex flex-col">
+    <header class="flex gap-2">
+      <form action="get">
+        <input type="text" placeholder="Pesquisar na Bíblia" />
+      </form>
+    </header>
+    <div class="mt-12">
+      <div v-if="!bibleStore.isLoading" class="bible">
+        <div v-if="bibleStore.verses">
+          <h2>
+            {{ bibleStore.verses.book.name }}
+          </h2>
+          <p v-for="verse in bibleStore.verses.verses" :key="verse.number">
+            <b>{{ verse.number }}</b> {{ verse.text }}
+          </p>
         </div>
       </div>
-    </div>
-    <div v-if="state.book" class="bible">
-      <h2>
-        {{ state.book.book.name }}
-      </h2>
-      <p v-for="verse in state.book.verses">
-        <b>{{ verse.number }}</b> {{ verse.text }}
-      </p>
+      <div v-else class="loading">
+        <v-icon name="fa-bible" scale="2" animation="spin" speed="slow">
+        </v-icon>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, reactive } from 'vue'
-import bible from '../services/bible'
+import { useBibleStore } from "@/stores/bible";
 
-interface IBook {
-  abbrev: { [k: string]: string };
-  author: string;
-  chapters: number;
-  group: string;
-  name: string;
-  testament: string;
-}
-
-
-const state = reactive({
-  activeDropdown: true,
-  book: null as any,
-  books: [] as IBook[],
-})
-
-onMounted(async () => {
-  state.books = await bible.getBooks();
-  state.book = await bible.getChapter('gn');
-});
-
-async function getBook(book: string) {
-  state.book = await bible.getChapter(book);
-}
+const bibleStore = useBibleStore();
 </script>
 
 <style lang="sass">
-.dropdown
-  .header
-    display: flex
-    justify-content: space-between
-    span
-      font-size: 1.5rem
-    
-  .options
-    height: 0
-    overflow: auto
-    display: flex
-    flex-direction: column
-    align-items: flex-start
-    button
-      padding: 6px 10px
-      border: none
-      transition: all .3s
-      text-align: left
-      width: 100%
-      &:hover
-        background-color: rgba(255,255,255,.4)
+.bible
+  display: flex
+  flex-direction: column
+  h2
+    font-size: 2rem
+    text-align: center
+.home
+  width: 630px
 
-  &.active .options
-    height: 150px
+.loading
+  height: 400px
+  display: flex
+  justify-content: center
+  align-items: center
+  color: #9f9f9f33
+
+form
+  width: 100%
+  input
+    width: 100%
+    border-radius: 14px
+    padding: 8px 18px
 
 .bible
   @apply mt-4
@@ -91,5 +65,4 @@ async function getBook(book: string) {
     font-style: italic
     b
       margin-right: 1rem
-
 </style>
