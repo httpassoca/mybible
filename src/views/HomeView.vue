@@ -12,6 +12,9 @@
             {{ bibleStore.verses.book.name }}
           </h1>
           <p v-for="verse in bibleStore.verses.verses" :key="verse.number">
+            <b class="chapter-number">
+              {{ bibleStore.verses.chapter.number }}.
+            </b>
             <b>{{ verse.number }}</b> {{ verse.text }}
           </p>
         </div>
@@ -65,4 +68,8 @@ form
     font-style: italic
     b
       margin-right: 1rem
+      &.chapter-number
+        position: absolute
+        left: -25px
+        opacity: .5
 </style>
